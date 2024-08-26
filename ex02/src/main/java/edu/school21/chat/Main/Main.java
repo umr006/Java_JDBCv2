@@ -21,7 +21,9 @@ public class Main {
 
         try (Connection connection = DataSource.getConnection()) {
             MessagesRepository messagesRepository = new MessagesRepositoryJdbcImpl(connection);
-            var opMessage = messagesRepository.findById(2L);
+            User user = new User(1, "login")
+
+            var opMessage = messagesRepository.save();
 //            Message message = opMessage.get();
 //            Optional<Long> messageAuthor = Optional.ofNullable(message.getMessageAuthor());
 //            messageAuthor.ifPresentOrElse( word -> {
