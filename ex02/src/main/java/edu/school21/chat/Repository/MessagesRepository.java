@@ -6,5 +6,5 @@ import edu.school21.chat.entity.Message;
 import java.util.Optional;
 
 public interface MessagesRepository {
-    Message save(Message message) throws NotSavedSubEntityException;
+    Optional<Message> save(Message message) throws NotSavedSubEntityException;
 }

@@ -5,6 +5,7 @@ import edu.school21.chat.Repository.MessagesRepositoryJdbcImpl;
 import edu.school21.chat.entity.*;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Optional;
@@ -20,15 +21,18 @@ public class Main {
 
 
         try (Connection connection = DataSource.getConnection()) {
-            MessagesRepository messagesRepository = new MessagesRepositoryJdbcImpl(connection);
-            User user = new User(1, "login")
+            MessagesRepositoryJdbcImpl messagesRepository = new MessagesRepositoryJdbcImpl(connection);
 
-            var opMessage = messagesRepository.save();
-//            Message message = opMessage.get();
-//            Optional<Long> messageAuthor = Optional.ofNullable(message.getMessageAuthor());
-//            messageAuthor.ifPresentOrElse( word -> {
-//                System.out.println("Author id = " + messageAuthor.get());
-//            }, () -> System.out.println("Author not Found"));
+            User Author = new User(3, "user3", "passwd", new ArrayList<>(), new ArrayList<>());
+            ChatRoom chatRoom = new ChatRoom(3, "room3", 3, new ArrayList<>());
+
+            Message message = new Message(8, Author, chatRoom, "newMessage", LocalDateTime.now());
+
+            Optional<Message> optionalMessage = messagesRepository.save(message);
+
+            if (optionalMessage.isPresent()) {
+                System.out.println("Saved message:\n" + optionalMessage.get());
+            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
